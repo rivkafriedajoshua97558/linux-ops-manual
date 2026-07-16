@@ -8,9 +8,9 @@
 3. [第一个 Shell 脚本与基础操作](#3-第一个-shell-脚本与基础操作)
 4. [Shell 变量核心与高级扩展](#4-shell-变量核心与高级扩展)
 5. [Shell 运算符与测试判断](#5-shell-运算符与测试判断)
-6. [流程控制：if 判断语句](#6-流程控制-if-判断语句)
-7. [循环语句：for 与 while](#7-循环语句-for-与-while)
-8. [Shell 函数：代码复用核心](#8-shell-函数-代码复用核心)
+6. [流程控制：if 判断语句](#6-流程控制:-if-判断语句)
+7. [循环语句：for 与 while](#7-循环语句:-for-与-while)
+8. [Shell 函数：代码复用核心](#8-shell-函数:-代码复用核心)
 9. [Shell 三剑客入门 (grep/sed/awk)](#9-shell-三剑客入门-grepsedawk)
 10. [核心编码规范与避坑指南](#10-核心编码规范与避坑指南)
 
@@ -142,26 +142,26 @@
 > 核心：通过条件真（True）或假（False）决定程序的执行流向。
 
     ```bash
-# 1. 单分支 if
-if [[ $USER == "root" ]]; then
-    echo "当前为超级管理员"
-fi
+    # 1. 单分支 if
+    if [[ $USER == "root" ]]; then
+        echo "当前为超级管理员"
+    fi
 
-# 2. 双分支 if-else
-if [[ -f $FILE ]]; then
-    echo "文件已存在"
-else
-    touch $FILE; echo "已创建文件"
-fi
+    # 2. 双分支 if-else
+    if [[ -f $FILE ]]; then
+        echo "文件已存在"
+    else
+        touch $FILE; echo "已创建文件"
+    fi
 
-# 3. 多分支 if-elif-else
-if [[ $SS -ge 90 ]]; then
-    echo "优秀"
-elif [[ $SS -ge 60 ]]; then
-    echo "及格"
-else
-    echo "不及格"
-fi
+    # 3. 多分支 if-elif-else
+    if [[ $SS -ge 90 ]]; then
+        echo "优秀"
+    elif [[ $SS -ge 60 ]]; then
+        echo "及格"
+    else
+        echo "不及格"
+    fi
     ```
 ---
 
@@ -169,15 +169,15 @@ fi
 ### 7.1 for 循环：遍历与批处理
 用于已知集合或数字区间的遍历，非常适合批量创建文件、修改文件名、批量重启服务。
     ```bash
-# 基础遍历（字符串）
-for i in item1 item2 item3; do
-    echo $i
-done
+    # 基础遍历（字符串）
+    for i in item1 item2 item3; do
+        echo $i
+    done
 
-# 数字区间遍历
-for i in {1..5}; do
-    touch "test_${i}.txt"
-done
+    # 数字区间遍历
+    for i in {1..5}; do
+        touch "test_${i}.txt"
+    done
     ```
 ### 7.2 while 循环：基于条件的持续执行
 
@@ -186,12 +186,12 @@ done
 > 🚨 注意：必须有条件变更逻辑（如自增），避免死循环。
 
     ```bash
-# 示例：循环输出 1~5
-NUM=1
-while [[ $NUM -le 5 ]]; do
-    echo "当前数字：$NUM"
-    let NUM++  # 变量自增
-done
+    # 示例：循环输出 1~5
+    NUM=1
+    while [[ $NUM -le 5 ]]; do
+        echo "当前数字：$NUM"
+        let NUM++  # 变量自增
+    done
     ```
 ### 7.3 循环控制命令
 - break：立即退出并终止整个循环结构。
@@ -202,13 +202,13 @@ done
 ## 8. Shell 函数：代码复用核心
 将重复使用的代码封装成函数，实现一次定义、多次调用，大幅提高脚本可读性与可维护性。
     ```bash
-# 1. 基础定义与无参调用
-SHOW_MSG(){ echo "调用成功!"; }
-SHOW_MSG
+    # 1. 基础定义与无参调用
+    SHOW_MSG(){ echo "调用成功!"; }
+    SHOW_MSG
 
-# 2. 灵活带参调用
-CALC(){ echo "和为：$(( $1 + $2 ))"; }
-CALC 10 20  # 输出：和为 30
+    # 2. 灵活带参调用
+    CALC(){ echo "和为：$(( $1 + $2 ))"; }
+    CALC 10 20  # 输出：和为 30
     ```
 > 💡 核心：函数内部通过 $1、$2 等位置变量接收外部传入的参数，让函数更通用。
 
@@ -257,6 +257,6 @@ CALC 10 20  # 输出：和为 30
 4. **空变量要加默认值**：使用 ${VAR:-默认值} 语法，防止变量为空时引发逻辑错误或 -z 判断失灵。
 5. **重要操作加交互确认**：关键步骤添加 read -p 确认逻辑，防止误删、误改带来的不可逆损失。
     ```bash
-read -p "确定要停止 Nginx 服务吗？(y/n) " confirm
-[[ $confirm == "y" ]] && systemctl stop nginx
+    read -p "确定要停止 Nginx 服务吗？(y/n) " confirm
+    [[ $confirm == "y" ]] && systemctl stop nginx
     ```
